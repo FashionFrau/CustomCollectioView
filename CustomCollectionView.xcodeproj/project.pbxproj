@@ -18,6 +18,8 @@
 		0C006E101EA813A7000A1653 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C006E0F1EA813A7000A1653 /* CustomCollectionViewCell.swift */; };
 		0C006E121EA94C5E000A1653 /* CustomHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C006E111EA94C5E000A1653 /* CustomHeaderReusableView.swift */; };
 		0C006E141EA9521D000A1653 /* CustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C006E131EA9521D000A1653 /* CustomHeader.xib */; };
+		0C006E161EA95F0D000A1653 /* CustomFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C006E151EA95F0D000A1653 /* CustomFooter.xib */; };
+		0C006E181EA95F9D000A1653 /* CustomFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C006E171EA95F9D000A1653 /* CustomFooterReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		0C006E0F1EA813A7000A1653 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C006E111EA94C5E000A1653 /* CustomHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderReusableView.swift; sourceTree = "<group>"; };
 		0C006E131EA9521D000A1653 /* CustomHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomHeader.xib; sourceTree = "<group>"; };
+		0C006E151EA95F0D000A1653 /* CustomFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomFooter.xib; sourceTree = "<group>"; };
+		0C006E171EA95F9D000A1653 /* CustomFooterReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFooterReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 				0C006E0F1EA813A7000A1653 /* CustomCollectionViewCell.swift */,
 				0C006E111EA94C5E000A1653 /* CustomHeaderReusableView.swift */,
 				0C006E131EA9521D000A1653 /* CustomHeader.xib */,
+				0C006E151EA95F0D000A1653 /* CustomFooter.xib */,
+				0C006E171EA95F9D000A1653 /* CustomFooterReusableView.swift */,
 			);
 			path = CustomCollectionView;
 			sourceTree = "<group>";
@@ -250,6 +256,7 @@
 				0C006E141EA9521D000A1653 /* CustomHeader.xib in Resources */,
 				0C006DE51EA811CE000A1653 /* Assets.xcassets in Resources */,
 				0C006DE31EA811CE000A1653 /* Main.storyboard in Resources */,
+				0C006E161EA95F0D000A1653 /* CustomFooter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +284,7 @@
 				0C006E0C1EA81248000A1653 /* CustomLayout.swift in Sources */,
 				0C006DDE1EA811CE000A1653 /* AppDelegate.swift in Sources */,
 				0C006E121EA94C5E000A1653 /* CustomHeaderReusableView.swift in Sources */,
+				0C006E181EA95F9D000A1653 /* CustomFooterReusableView.swift in Sources */,
 				0C006E0E1EA812AE000A1653 /* CustomCollectionViewController.swift in Sources */,
 				0C006E101EA813A7000A1653 /* CustomCollectionViewCell.swift in Sources */,
 			);

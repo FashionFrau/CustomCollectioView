@@ -10,7 +10,10 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 private let reuseHeaderIdentifier = "HeaderCell"
+private let reuseFooterIdentifier = "FooterCell"
+
 private let nibForHeader = "CustomHeader"
+private let nibForFooter = "CustomFooter"
 
 class CustomCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
@@ -23,8 +26,11 @@ class CustomCollectionViewController: UICollectionViewController, UICollectionVi
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        let nib = UINib(nibName: nibForHeader, bundle: nil)
-        self.collectionView!.register(nib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier)
+        let nibHeader = UINib(nibName: nibForHeader, bundle: nil)
+        self.collectionView!.register(nibHeader, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier)
+
+        let nibFooter = UINib(nibName: nibForFooter, bundle: nil)
+        self.collectionView!.register(nibFooter, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseFooterIdentifier)
 
         // Do any additional setup after loading the view.
         self.collectionView?.delegate = self
@@ -32,7 +38,7 @@ class CustomCollectionViewController: UICollectionViewController, UICollectionVi
 
         self.collectionView?.reloadData()
 
-//        self.collectionView!.contentInset = UIEdgeInsets(top: 23, left: 5, bottom: 10, right: 5)
+        self.collectionView!.contentInset = UIEdgeInsets(top: 10, left: 5, bottom: 15, right: 5)
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,12 +94,14 @@ class CustomCollectionViewController: UICollectionViewController, UICollectionVi
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        if(kind == UICollectionElementKindSectionHeader) {
+        if(kind == UICollectionElementKindSectionHeader) {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! CustomHeaderReusableView
         cell.layer.borderWidth = 1
         
         cell.layer.borderColor = getRandomColor()
         return cell
-//        }
+        } else {
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseFooterIdentifier, for: indexPath) as! CustomFooterReusableView
+        }
     }
 }

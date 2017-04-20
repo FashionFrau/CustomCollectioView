@@ -9,13 +9,13 @@
 import UIKit
 
 class CustomLayout: UICollectionViewLayout {
-    var numberOfColumns = 2
-    let verticalSpaceBetweenMiniCards: CGFloat = 10.0
+    let numberOfColumns = 2
+    let verticalSpaceBetweenMiniCards: CGFloat = 20.0
     let horizontalSpaceBetweenMiniCards: CGFloat = 10.0
 
     let spaceBetweenHeaderAndMiniCards: CGFloat = 10.0
 
-    let cellHeight: CGFloat = 200.0
+    let rowHeight: CGFloat = 200.0
 
     let headderPadding: CGFloat = 5.0
 
@@ -24,78 +24,70 @@ class CustomLayout: UICollectionViewLayout {
         return collectionView!.bounds.width * percentageWidth
     }
 
-    // 3
-    private var headerAttributes = [UICollectionViewLayoutAttributes]()
-    private var miniCardsAttributes = [UICollectionViewLayoutAttributes]()
+    let footerPadding: CGFloat = 5.0
+    let footerHeight: CGFloat = 5.0
 
-    // 4
-    private var contentHeight: CGFloat  = 0.0
-    private var contentWidth: CGFloat {
+    //    Attributes
+    fileprivate var headerAttributes = [UICollectionViewLayoutAttributes]()
+    fileprivate var miniCardsAttributes = [UICollectionViewLayoutAttributes]()
+    fileprivate var footerAttributes = [UICollectionViewLayoutAttributes]()
+
+    //  ViewContentSize
+    fileprivate var contentHeight: CGFloat  = 0.0
+    fileprivate var contentWidth: CGFloat {
         let insets = collectionView!.contentInset
         return collectionView!.bounds.width - (insets.left + insets.right)
     }
 
+    var headerXOffset: CGFloat = 0
+    var yOffset: [CGFloat] = []
+    var column:Int = 0
 
     override func prepare() {
 
         if (collectionView == nil) {
             return
         }
+
         headerAttributes.removeAll()
         miniCardsAttributes.removeAll()
-        // 2
+        footerAttributes.removeAll()
+
 
         let columnWidth = (contentWidth - hearderWidth) / CGFloat(numberOfColumns)
         var xOffset = [CGFloat]()
         for column in 0 ..< numberOfColumns {
             xOffset.append(hearderWidth + CGFloat(column) * columnWidth)
         }
-        var column = 0
-        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
+        column = 0
+        yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
 
-        // 3
-        //            for section in 1..collectionView!.numberOfSections {
 
-        calculateFramesForHeaders()
-        for item in 0 ..< collectionView!.numberOfItems(inSection: 0) { //TODO inSection value
+        for section in 0 ..< collectionView!.numberOfSections {
 
-            let indexPath = NSIndexPath(item: item, section: 0)
+            calculateFramesForHeader(section: section)
 
-            let width = columnWidth - horizontalSpaceBetweenMiniCards
-            let height = cellHeight - verticalSpaceBetweenMiniCards
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: width, height: height)
+            for miniCard in 0 ..< collectionView!.numberOfItems(inSection: section) {
 
-            // 5
-            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath as IndexPath)
-            attributes.frame = frame
-            miniCardsAttributes.append(attributes)
+                let miniCardIndexPath = IndexPath(item: miniCard, section: section)
 
-            // 6
-            contentHeight = max(contentHeight, frame.maxY)
-            yOffset[column] = yOffset[column] + cellHeight
+                let miniCardWidthOffset = columnWidth - horizontalSpaceBetweenMiniCards
+                let minCardHeightOffset = rowHeight - verticalSpaceBetweenMiniCards
+                let miniCardYOffset = yOffset[column] + verticalSpaceBetweenMiniCards
 
-            column = column >= (numberOfColumns - 1) ? 0 : column + 1
-        }
-        //            }
+                let miniCardAttributes = UICollectionViewLayoutAttributes(forCellWith: miniCardIndexPath)
+                miniCardAttributes.frame = CGRect(x: xOffset[column], y: miniCardYOffset, width: miniCardWidthOffset, height: minCardHeightOffset)
+                miniCardsAttributes.append(miniCardAttributes)
 
-    }
 
-    private func calculateFramesForHeaders() {
-        for section in 0...collectionView!.numberOfSections {
-            let indexPath = IndexPath(item: 0, section: section)
+                contentHeight = max(contentHeight, miniCardAttributes.frame.maxY)
+                yOffset[column] = yOffset[column] + rowHeight
 
-            let headerCellAttributes =
-                UICollectionViewLayoutAttributes(
-                    forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                    with: indexPath)
+                column = column >= (numberOfColumns - 1) ? 0 : column + 1
+            }
 
-            let yOffset = CGFloat(section) * (cellHeight + horizontalSpaceBetweenMiniCards)
-            let hearderWidthY = hearderWidth - spaceBetweenHeaderAndMiniCards
-            let height = cellHeight - verticalSpaceBetweenMiniCards
-            let xOffeset = 0 + headderPadding
+            calculateFramesForFooter(section: section)
 
-            headerCellAttributes.frame = CGRect(x: xOffeset, y: yOffset, width: hearderWidthY, height: height)
-            headerAttributes.append(headerCellAttributes)
         }
     }
 
@@ -117,11 +109,52 @@ class CustomLayout: UICollectionViewLayout {
                 layoutAttributes.append(attributes)
             }
         }
+
+        for attributes in footerAttributes {
+            if attributes.frame.intersects(rect) {
+                layoutAttributes.append(attributes)
+            }
+        }
         return layoutAttributes
+        
+    }
+    
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return miniCardsAttributes[indexPath.row]
+    }
+}
+
+
+extension CustomLayout {
+
+    fileprivate func calculateFramesForHeader(section: Int) {
+        let headerIndexPath = IndexPath(item: 0, section: section)
+        let headerCellAttributes =
+            UICollectionViewLayoutAttributes(
+                forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                with: headerIndexPath)
+
+        headerXOffset = 0 + headderPadding
+        let headerYOffset = CGFloat(section) * rowHeight + verticalSpaceBetweenMiniCards
+        let hearderWidthOffset = hearderWidth - spaceBetweenHeaderAndMiniCards
+        let headerHeightOffset = rowHeight - verticalSpaceBetweenMiniCards
+
+
+        headerCellAttributes.frame = CGRect(x: headerXOffset, y: headerYOffset, width: hearderWidthOffset, height: headerHeightOffset)
+        headerAttributes.append(headerCellAttributes)
 
     }
 
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return miniCardsAttributes[indexPath.row]
+    fileprivate func calculateFramesForFooter(section: Int) {
+        let footerIndexPath = IndexPath(item: 0, section: section)
+        let footerCellAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: footerIndexPath)
+
+        let footerXOffset = headerXOffset
+        let footerYOffset = yOffset[column] + footerPadding
+        let footerWidthOffset =  contentWidth - 2 * footerPadding
+        let footerHeightOffset = footerHeight
+
+        footerCellAttributes.frame = CGRect(x: footerXOffset, y: footerYOffset, width: footerWidthOffset, height: footerHeightOffset)
+        footerAttributes.append(footerCellAttributes)
     }
 }
