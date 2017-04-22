@@ -115,6 +115,10 @@ extension CustomCollectionViewController : CustomLayoutDelegate {
     func collectionView(collectionView:UICollectionView, heightForMiniCardWithWidth:CGFloat) -> CGFloat {
         return 200.0
     }
+
+    func collectionViewHeightForFooter() -> CGFloat {
+        return 25.0
+    }
 //    // 1
 //    func collectionView(collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath: NSIndexPath,
 //                        withWidth width: CGFloat) -> CGFloat {

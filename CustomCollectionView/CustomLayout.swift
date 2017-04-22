@@ -9,6 +9,8 @@
 import UIKit
 
 protocol CustomLayoutDelegate {
+
+    func collectionViewHeightForFooter() -> CGFloat
     func collectionView(collectionView:UICollectionView, heightForMiniCardWithWidth:CGFloat) -> CGFloat
 }
 
@@ -20,7 +22,10 @@ class CustomLayout: UICollectionViewLayout {
 
     var headerMiniCardHeight: CGFloat = 0.0
 
-    var footerHeight: CGFloat = 25.0
+    var footerHeight: CGFloat {
+        return delegate.collectionViewHeightForFooter()
+    }
+
     var footerWidth:CGFloat {
         return collectionView!.bounds.width
     }
