@@ -17,16 +17,25 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BNz-wP-7MR">
                     <rect key="frame" x="0.0" y="24" width="375" height="2"/>
-                    <color key="backgroundColor" red="0.25098040700000002" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="2" id="fBn-Nh-voa"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Footer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SyK-DO-DsM">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="BNz-wP-7MR" firstAttribute="width" secondItem="NxG-oX-gcl" secondAttribute="width" id="1q9-md-Fj0"/>
+                <constraint firstItem="SyK-DO-DsM" firstAttribute="width" secondItem="NxG-oX-gcl" secondAttribute="width" id="5RD-dD-aJp"/>
                 <constraint firstItem="BNz-wP-7MR" firstAttribute="centerY" secondItem="NxG-oX-gcl" secondAttribute="centerY" id="FVc-3A-Dz9"/>
+                <constraint firstItem="SyK-DO-DsM" firstAttribute="height" secondItem="NxG-oX-gcl" secondAttribute="height" id="Zab-ND-0qP"/>
+                <constraint firstItem="SyK-DO-DsM" firstAttribute="centerX" secondItem="NxG-oX-gcl" secondAttribute="centerX" id="cs0-Ml-OlO"/>
                 <constraint firstItem="BNz-wP-7MR" firstAttribute="centerX" secondItem="NxG-oX-gcl" secondAttribute="centerX" id="quu-Qt-tTh"/>
+                <constraint firstItem="SyK-DO-DsM" firstAttribute="centerY" secondItem="NxG-oX-gcl" secondAttribute="centerY" id="tX6-H6-cei"/>
             </constraints>
             <point key="canvasLocation" x="-64" y="47"/>
         </collectionReusableView>

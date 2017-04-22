@@ -33,12 +33,13 @@ class CustomCollectionViewController: UICollectionViewController, UICollectionVi
         self.collectionView!.register(nibFooter, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseFooterIdentifier)
 
         // Do any additional setup after loading the view.
-        self.collectionView?.delegate = self
-        self.collectionView?.dataSource = self
+        if let layout = collectionView?.collectionViewLayout as? CustomLayout {
+            layout.delegate = self
+        }
 
         self.collectionView?.reloadData()
 
-        self.collectionView!.contentInset = UIEdgeInsets(top: 10, left: 5, bottom: 15, right: 5)
+//        self.collectionView!.contentInset = UIEdgeInsets(top: 10, left: 5, bottom: 15, right: 5)
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,12 +97,42 @@ class CustomCollectionViewController: UICollectionViewController, UICollectionVi
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if(kind == UICollectionElementKindSectionHeader) {
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! CustomHeaderReusableView
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 2
         
         cell.layer.borderColor = getRandomColor()
         return cell
         } else {
-            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseFooterIdentifier, for: indexPath) as! CustomFooterReusableView
+            let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseFooterIdentifier, for: indexPath) as! CustomFooterReusableView
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = getRandomColor()
+            return cell
         }
     }
+}
+
+extension CustomCollectionViewController : CustomLayoutDelegate {
+
+    func collectionView(collectionView:UICollectionView, heightForMiniCardWithWidth:CGFloat) -> CGFloat {
+        return 200.0
+    }
+//    // 1
+//    func collectionView(collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath: NSIndexPath,
+//                        withWidth width: CGFloat) -> CGFloat {
+//        let photo = photos[indexPath.item]
+//        let boundingRect =  CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
+//        let rect  = AVMakeRect(aspectRatio: photo.image.size, insideRect: boundingRect)
+//        return rect.size.height
+//    }
+//
+//    // 2
+//    func collectionView(collectionView: UICollectionView,
+//                        heightForAnnotationAtIndexPath indexPath: NSIndexPath, withWidth width: CGFloat) -> CGFloat {
+//        let annotationPadding = CGFloat(4)
+//        let annotationHeaderHeight = CGFloat(17)
+//        let photo = photos[indexPath.item]
+//        let font = UIFont(name: "AvenirNext-Regular", size: 10)!
+//        let commentHeight = photo.heightForComment(font, width: width)
+//        let height = annotationPadding + annotationHeaderHeight + commentHeight + annotationPadding
+//        return height
+//    }
 }
